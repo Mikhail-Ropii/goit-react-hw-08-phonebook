@@ -1,17 +1,21 @@
-import { useContacts } from 'components/redux/Slices';
+import { useEffect, useState } from 'react';
 
-export const Filter = () => {
-  const { filter, filterContacts } = useContacts();
+export const Filter = ({ changeFilter }) => {
+  const [filterValue, setFilterValue] = useState('');
 
   const onChangeFilter = evt => {
-    filterContacts(evt.currentTarget.value);
+    setFilterValue(evt.currentTarget.value);
   };
+
+  useEffect(() => {
+    changeFilter(filterValue);
+  }, [changeFilter, filterValue]);
 
   return (
     <form>
       <label>
         Find contacts by name
-        <input type="text" value={filter} onChange={onChangeFilter} />
+        <input type="text" value={filterValue} onChange={onChangeFilter} />
       </label>
     </form>
   );

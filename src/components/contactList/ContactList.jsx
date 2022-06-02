@@ -1,18 +1,21 @@
 import { ContactItem } from '../contactItem/ContactItem';
-import { Button, BookItem } from './ContactList.styled';
-import { useContacts } from '../redux/Slices';
+import { BookItem, DeleteButton } from './ContactList.styled';
+import { useContacts } from '../redux/Contacts-slice';
 import { useMemo } from 'react';
 
-export const ContactList = () => {
-  const { contacts, filter, deleteContact } = useContacts();
+export const ContactList = ({ filterValue }) => {
+  const { contacts, deleteContact } = useContacts();
 
   const findContact = useMemo(() => {
     return (
       contacts?.filter(contact =>
-        contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim())
+        contact.name
+          .toLowerCase()
+          .trim()
+          .includes(filterValue.toLowerCase().trim())
       ) ?? []
     );
-  }, [contacts, filter]);
+  }, [contacts, filterValue]);
 
   const handleDeleteContact = id => {
     deleteContact(id);
@@ -20,12 +23,16 @@ export const ContactList = () => {
 
   return (
     <ul>
-      {findContact.map(({ id, name, phone }) => (
+      {findContact.map(({ id, name, number }) => (
         <BookItem key={id}>
-          <ContactItem name={name} number={phone} />
-          <Button type="button" onClick={() => handleDeleteContact(id)}>
+          <ContactItem name={name} number={number} />
+          <DeleteButton
+            variant="contained"
+            type="button"
+            onClick={() => handleDeleteContact(id)}
+          >
             Delete
-          </Button>
+          </DeleteButton>
         </BookItem>
       ))}
     </ul>

@@ -1,31 +1,58 @@
-import { useEffect } from 'react';
-import { Container, Title, ContcTitle, Section } from './Phonebook.styled';
-import { ContactForm } from './contactForm/ContactForm';
-import { Filter } from './filter/Filter';
-import { ContactList } from './contactList/ContactList';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from './redux/ContactsOperation';
+import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { lazy, Suspense, useEffect } from 'react';
+import operations from './redux/auth/Auth-operations';
+import { PrivatRoute } from './PrivatRoute';
+import { PublicRoute } from './PublicRoute';
+import authSelectors from './redux/auth/Auth-selectors';
 
-// const LS_KEY = 'contacts';
+const Layout = lazy(() => import('../pages/Layout'));
+const Home = lazy(() => import('../pages/Home'));
+const Register = lazy(() => import('../pages/Register'));
+const Login = lazy(() => import('../pages/Login'));
+const Contacts = lazy(() => import('../pages/Contacts'));
+
 export function App() {
+  const isRefreshingUser = useSelector(authSelectors.getIsRefreshingUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function asyncContacts() {
-      dispatch(fetchContacts());
-    }
-    asyncContacts();
+    dispatch(operations.refreshUser());
   }, [dispatch]);
 
   return (
-    <Container>
-      <Section>
-        <Title>Phonebook</Title>
-        <ContactForm />
-        <ContcTitle>Contacts</ContcTitle>
-        <Filter />
-        <ContactList />
-      </Section>
-    </Container>
+    !isRefreshingUser && (
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />}></Route>
+            <Route
+              path="register"
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            ></Route>
+            <Route
+              path="login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            ></Route>
+            <Route
+              path="contacts"
+              element={
+                <PrivatRoute>
+                  <Contacts />
+                </PrivatRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </Suspense>
+    )
   );
 }

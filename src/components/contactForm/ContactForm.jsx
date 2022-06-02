@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { nanoid } from 'nanoid';
 import { Button, Label } from './ContactForm.styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useContacts } from 'components/redux/Slices';
+import { useContacts } from 'components/redux/Contacts-slice';
 
 const FormStyle = styled(Form)`
   display: flex;
@@ -33,7 +32,6 @@ export const ContactForm = () => {
     }
 
     const newContact = {
-      id: nanoid(5),
       name: values.name,
       number: values.number,
     };

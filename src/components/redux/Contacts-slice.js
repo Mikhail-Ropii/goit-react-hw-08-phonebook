@@ -26,7 +26,7 @@ export const contactsSlice = createSlice({
     [deleteContact.pending](state, action) {},
     [deleteContact.fulfilled](state, action) {
       state.items = state.items.filter(
-        contact => contact.id !== action.payload.id
+        contact => contact.id !== action.payload
       );
     },
     [deleteContact.rejected](state, action) {
@@ -37,34 +37,19 @@ export const contactsSlice = createSlice({
 
 export default contactsSlice.reducer;
 
-export const filterSlice = createSlice({
-  name: 'filter',
-  initialState: '',
-  reducers: {
-    changeFilter: (_, action) => action.payload,
-  },
-});
-
-export const { changeFilter } = filterSlice.actions;
-
 //Selectors
 const getContacts = state => state.contacts.items;
-const getFilterValue = state => state.filter;
 
 //Hooks
 export const useContacts = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilterValue);
   const addNewContact = newContact => dispatch(addContact(newContact));
-  const filterContacts = value => dispatch(changeFilter(value));
   const deleteContactById = id => dispatch(deleteContact(id));
 
   return {
     contacts,
-    filter,
     addNewContact,
-    filterContacts,
     deleteContact: deleteContactById,
   };
 };
