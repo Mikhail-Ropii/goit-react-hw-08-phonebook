@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button, Label } from './ContactForm.styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useContacts } from 'components/redux/Contacts-slice';
+import { useContacts } from 'redux/Contacts-slice';
 
 const FormStyle = styled(Form)`
   display: flex;

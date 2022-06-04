@@ -1,16 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { lazy, Suspense, useEffect } from 'react';
-import operations from './redux/auth/Auth-operations';
+import operations from '../redux/auth/Auth-operations';
 import { PrivatRoute } from './PrivatRoute';
 import { PublicRoute } from './PublicRoute';
-import authSelectors from './redux/auth/Auth-selectors';
+import authSelectors from '../redux/auth/Auth-selectors';
 
 const Layout = lazy(() => import('../pages/Layout'));
 const Home = lazy(() => import('../pages/Home'));
 const Register = lazy(() => import('../pages/Register'));
 const Login = lazy(() => import('../pages/Login'));
 const Contacts = lazy(() => import('../pages/Contacts'));
+const NotFoundPage = lazy(() => import('../pages/NotFundPage'));
 
 export function App() {
   const isRefreshingUser = useSelector(authSelectors.getIsRefreshingUser);
@@ -51,6 +52,7 @@ export function App() {
               }
             />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     )

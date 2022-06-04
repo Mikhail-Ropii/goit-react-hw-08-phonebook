@@ -1,6 +1,6 @@
 import { ContactItem } from '../contactItem/ContactItem';
 import { BookItem, DeleteButton } from './ContactList.styled';
-import { useContacts } from '../redux/Contacts-slice';
+import { useContacts } from '../../redux/Contacts-slice';
 import { useMemo } from 'react';
 
 export const ContactList = ({ filterValue }) => {

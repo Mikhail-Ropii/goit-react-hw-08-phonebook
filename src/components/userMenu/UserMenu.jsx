@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import authSelectors from 'components/redux/auth/Auth-selectors';
-import operations from 'components/redux/auth/Auth-operations';
+import authSelectors from 'redux/auth/Auth-selectors';
+import operations from 'redux/auth/Auth-operations';
 import { useDispatch } from 'react-redux';
 import { ContainMenu, LogOutButton, TextMenu } from './UserMenu.styled';
 

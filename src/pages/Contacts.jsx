@@ -9,7 +9,7 @@ import { ContactForm } from '../components/contactForm/ContactForm';
 import { Filter } from '../components/filter/Filter';
 import { ContactList } from '../components/contactList/ContactList';
 import { useDispatch } from 'react-redux';
-import { fetchContacts } from '../components/redux/ContactsOperation';
+import { fetchContacts } from '../redux/ContactsOperation';
 
 export default function Contacts() {
   const [filter, setFilter] = useState('');

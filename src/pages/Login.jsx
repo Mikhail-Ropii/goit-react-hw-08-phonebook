@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import operations from 'components/redux/auth/Auth-operations';
+import operations from 'redux/auth/Auth-operations';
 import { Label } from '../components/contactForm/ContactForm.styled';
 import { LogInButton } from 'components/styled/Login.styled';
 
@@ -50,12 +50,12 @@ export default function Login() {
         <Label htmlFor="name">
           Email
           <ErrorMessageStyle name="email" component="div" />
-          <Field type="text" name="email" id="email" />
+          <Field type="email" name="email" id="email" />
         </Label>
         <Label htmlFor="number">
           Password
           <ErrorMessageStyle name="password" component="div" />
-          <Field type="tel" name="password" id="password" />
+          <Field type="password" name="password" id="password" />
         </Label>
         <LogInButton variant="contained" type="submit">
           Log In
